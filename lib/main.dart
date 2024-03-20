@@ -51,62 +51,64 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: Center(
-            child: Column(
-          children: [
-            Text(
-              "Contacts",
-              style: TextStyle(
-                  color: Color(0xFF000000),
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 600,
-              child: names!.isEmpty
-                  ? Center(
-                      child: Text('No data'),
-                    )
-                  : ListView.builder(
-                      itemCount: names!.length,
-                      itemBuilder: (context, index) {
-                        return pfp(
-                          img:
-                              'https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&w=600',
-                          label: names![index],
-                          num: numbers![index],
-                          email: emails![index],
-                        );
+        child: SingleChildScrollView(
+          child: Center(
+              child: Column(
+            children: [
+              Text(
+                "Contacts",
+                style: TextStyle(
+                    color: Color(0xFF000000),
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 600,
+                child: names!.isEmpty
+                    ? Center(
+                        child: Text('No data'),
+                      )
+                    : ListView.builder(
+                        itemCount: names!.length,
+                        itemBuilder: (context, index) {
+                          return pfp(
+                            img:
+                                'https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&w=600',
+                            label: names![index],
+                            num: numbers![index],
+                            email: emails![index],
+                          );
+                        },
+                      ),
+              ),
+              Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return next();
+                          },
+                        ));
                       },
-                    ),
-            ),
-            Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return next();
-                        },
-                      ));
-                    },
-                    child: Text("Add")),
-                    SizedBox(width: 40,),
-                ElevatedButton(
-                    onPressed: () async {
-                      final pref = await SharedPreferences.getInstance();
-                      await pref.clear();
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return HomePage();
-                        },
-                      ));
-                    },
-                    child: Text("Clear")),
-              ],
-            )
-          ],
-        )),
+                      child: Text("Add")),
+                      SizedBox(width: 40,),
+                  ElevatedButton(
+                      onPressed: () async {
+                        final pref = await SharedPreferences.getInstance();
+                        await pref.clear();
+                        Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) {
+                            return HomePage();
+                          },
+                        ));
+                      },
+                      child: Text("Clear")),
+                ],
+              )
+            ],
+          )),
+        ),
       ),
     );
   }
